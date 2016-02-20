@@ -4,6 +4,7 @@
 
 ### open usefull packages
 library(data.table)
+
 library(dplyr)
 
 ### there are 3 files for each train and test data
@@ -29,12 +30,16 @@ activityLabels <- read.table('UCI HAR Dataset/activity_labels.txt', header = FAL
 
 ### Merge train and test file (Part 1) 
 subject <- rbind(subjectTrain, subjectTest)
+
 activity <- rbind(activityTrain, activityTest)
+
 features <- rbind(featuresTrain, featuresTest)
 
 ### set names to the variables
 names(subject)<-c('subject')
+
 names(activity)<- c('activity')
+
 names(features)<- featureNames$V2
 
 ### creating the complete Data (Part 2)
@@ -50,12 +55,14 @@ required_columns <- c(selected_columns, 562:563)
 
 ### create selected_Data and take a look on its dimension
 selected_Data <- Data[ , required_columns]
+
 dim(selected_Data)
 
 ## STEP 3: Uses descriptive activity names to name the activities in the data set
 
 ### transform activity in factor variable
 Data$activity <- as.character(Data$activity)
+
 for (i in 1:6){
                 Data$activity[Data$activity == i] <- as.character(activityLabels[i,2])
                 } 
@@ -93,6 +100,7 @@ names(Data)<-gsub("BodyBody", "Body", names(Data))
 
 ### factorizing subject variable
 Data$subject <- as.factor(Data$subject)
+
 Data <- data.table(Data)
 
 ### create a new tidy data
